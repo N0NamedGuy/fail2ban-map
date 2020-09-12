@@ -1,0 +1,8 @@
+{
+  "short_name": "Fail2Ban Map",
+  "name": "Faile2Ban real time map",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
