@@ -2,14 +2,15 @@ const app = require('connect')();
 const cors = require('cors');
 const serveStatic = require('serve-static');
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, { path: '/banmap/socket.io' });
 const Tail = require('tail').Tail;
 const fs = require('fs');
 const events = require('events');
 const geoip = require('geoip-lite');
 
+const path = require('path');
 const PORT = 5000;
-const FAIL2BAN_LOG = './fail2ban.log';
+const FAIL2BAN_LOG = path.resolve(__dirname, 'fail2ban.log');
 
 function sshdBanFilter(line) {
     return (line.category === 'actions' &&
@@ -74,9 +75,9 @@ tail.on('line', (line) => {
 
 app.use(cors());
 
-app.use(serveStatic('./client/build', { index: ['index.html']}))
+app.use('/banmap', serveStatic('client/build/', { index: ['index.html']}));
 
-app.use('/api/bans', function (req, res, next) {
+app.use('/banmap/api/bans', function (req, res, next) {
     req.set
     res.end(JSON.stringify(fail2banLogs.filter(sshdBanFilter).map(sshdBanMap)));
     next();

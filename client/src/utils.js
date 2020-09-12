@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const HOST = '';
+const HOST = '/banmap';
 
 function makeRequest(req) {
     return fetch(`${HOST}${req}`)
@@ -8,7 +8,7 @@ function makeRequest(req) {
 }
 
 function getWebSocket() {
-    return io(HOST);
+    return io(HOST, { path: `${HOST}/socket.io` });
 }
 
 export { makeRequest, getWebSocket };
