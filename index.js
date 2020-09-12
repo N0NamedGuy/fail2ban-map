@@ -55,7 +55,9 @@ function parseLogLine(line) {
 }
 
 const MAXLINES = 100;
-const fail2banLogs = getFileLines().filter((e, i, arr) => { i < arr.length - MAXLINES});
+const fail2banLogs = getFileLines()
+	.filter(sshdBanFilter)
+	.filter((e, i, arr) => i > ((arr.length - 1 - MAXLINES)));
 
 const tail = new Tail(FAIL2BAN_LOG);
 
