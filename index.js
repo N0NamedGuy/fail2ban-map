@@ -75,7 +75,7 @@ tail.on('line', (line) => {
 
 app.use(cors());
 
-app.use('/banmap', serveStatic('client/build/', { index: ['index.html']}));
+app.use('/banmap', serveStatic(path.join(__dirname, 'client/build/'), { index: ['index.html']}));
 
 app.use('/banmap/api/bans', function (req, res, next) {
     req.set
