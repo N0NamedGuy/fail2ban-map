@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  nginx:
+    restart: on-failure
+    hostname: nginx
+    build:
+      context: ..
+      dockerfile: './docker/nginx/Dockerfile'
+    ports:
+      - 8080:80
+    depends_on:
+      - banmap
+    volumes:
+      - frontend-client:/usr/share/nginx/html/banmap
+  banmap:
+    restart: on-failure
+    hostname: banmap-api
+    build:
+      context: ..
+      dockerfile: './docker/banmap/Dockerfile'
+    ports:
+      - 5000:5000
+    volumes:
+      - /var/log/fail2ban.log:/app/fail2ban.log
+      - frontend-client:/app/client/build
+
+volumes:
+  frontend-client:
+
